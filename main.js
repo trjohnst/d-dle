@@ -63,6 +63,8 @@ closeBtn.addEventListener("click", () => {
 
 canvas.addEventListener("mousedown", (e) => draw = true)
 canvas.addEventListener("mouseup", (e) => draw = false)
+canvas.addEventListener("touchstart", (e) => draw = true)
+canvas.addEventListener("touchend", (e) => draw = false)
 
 canvas.addEventListener("mousemove", (e) => {
     if(prevX == null || prevY == null || !draw){
