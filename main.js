@@ -82,3 +82,18 @@ canvas.addEventListener("mousemove", (e) => {
     prevX = currentX
     prevY = currentY
 })
+
+const searchParams = new URLSearchParams(window.location.search);
+const doodle = searchParams.get("doodle");
+console.log(doodle);
+
+var img = new Image();
+img.onload = function(){
+  ctx.drawImage(img,0,0); // Or at whatever offset you like
+};
+img.src = doodle;
+
+let loaders = document.querySelectorAll(".loader");
+loaders.forEach(loader => {
+    loader.classList.remove("visible");
+});
