@@ -41,7 +41,7 @@ shareBtn.addEventListener("click", () => {
     const shareUrl = canvas.toDataURL("imag/png")
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set("doodle", shareUrl);
-    const newUrl = `${window.location.protocol + window.location.hostname + window.location.pathname}?${searchParams.toString()}`;
+    const newUrl = `${window.location.protocol + '//' + window.location.hostname + window.location.pathname}?${searchParams.toString()}`;
     window.history.replaceState({}, '', newUrl);
     
     const shareModals = document.querySelectorAll(".share-modal");
