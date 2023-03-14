@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas")
-canvas.height = window.innerHeight
-canvas.width = window.innerWidth
+canvas.height = 500; //window.innerHeight
+canvas.width = 300; //window.innerWidth
 
 const ctx = canvas.getContext("2d")
 
@@ -68,13 +68,32 @@ canvas.addEventListener("touchend", (e) => draw = false)
 
 canvas.addEventListener("mousemove", (e) => {
     if(prevX == null || prevY == null || !draw){
-        prevX = e.clientX
-        prevY = e.clientY
+        prevX = e.clientX - canvas.offsetLeft
+        prevY = e.clientY - canvas.offsetTop
         return
     }
 
-    let currentX = e.clientX
-    let currentY = e.clientY
+    let currentX = e.clientX - canvas.offsetLeft
+    let currentY = e.clientY - canvas.offsetTop
+
+    ctx.beginPath()
+    ctx.moveTo(prevX, prevY)
+    ctx.lineTo(currentX, currentY)
+    ctx.stroke()
+
+    prevX = currentX
+    prevY = currentY
+})
+
+canvas.addEventListener("touchmove", (e) => {
+    if(prevX == null || prevY == null || !draw){
+        prevX = e.touches[0].clientX - canvas.offsetLeft
+        prevY = e.touches[0].clientY - canvas.offsetTop
+        return
+    }
+
+    let currentX = e.touches[0].clientX - canvas.offsetLeft
+    let currentY = e.touches[0].clientY - canvas.offsetTop
 
     ctx.beginPath()
     ctx.moveTo(prevX, prevY)
@@ -87,13 +106,14 @@ canvas.addEventListener("mousemove", (e) => {
 
 const searchParams = new URLSearchParams(window.location.search);
 const doodle = searchParams.get("doodle");
-console.log(doodle);
 
-var img = new Image();
-img.onload = function(){
-  ctx.drawImage(img,0,0); // Or at whatever offset you like
-};
-img.src = doodle;
+if (doodle !== null) {
+    var img = new Image();
+    img.onload = function(){
+      ctx.drawImage(img,0,0); // Or at whatever offset you like
+    };
+    img.src = doodle;
+}
 
 let loaders = document.querySelectorAll(".loader");
 loaders.forEach(loader => {
