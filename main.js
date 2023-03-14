@@ -41,7 +41,7 @@ shareBtn.addEventListener("click", () => {
     const shareUrl = canvas.toDataURL("imag/png")
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set("doodle", shareUrl);
-    const newUrl = `${window.location.toString().substr(0, window.location.toString().indexOf('?'))}?${searchParams.toString()}`;
+    const newUrl = `${window.location.protocol + window.location.hostname + window.location.pathname}?${searchParams.toString()}`;
     window.history.replaceState({}, '', newUrl);
     
     const shareModals = document.querySelectorAll(".share-modal");
@@ -51,6 +51,17 @@ shareBtn.addEventListener("click", () => {
 
         shareModal.classList.add("visible");
     });
+})
+
+
+let copyBtn = document.querySelector(".copy")
+copyBtn.addEventListener("click", () => {
+    const copyBox = document.querySelector(".share-modal .share-modal__copy-box");
+
+    copyBox.select();
+    copyBox.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyBox.value);
+
 })
 
 let closeBtn = document.querySelector(".close")
